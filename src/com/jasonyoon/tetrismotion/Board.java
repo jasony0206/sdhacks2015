@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import com.jasonyoon.tetrismotion.Shape.Tetrominoes;
 
 public class Board extends JPanel implements ActionListener {
+
     final int BoardWidth = 10;
     final int BoardHeight = 22;
 
@@ -23,8 +24,6 @@ public class Board extends JPanel implements ActionListener {
     JLabel statusbar;
     Shape curPiece;
     Tetrominoes[] board;
-
-
 
     public Board(Tetris parent) {
 
@@ -48,14 +47,11 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-
     int squareWidth() { return (int) getSize().getWidth() / BoardWidth; }
     int squareHeight() { return (int) getSize().getHeight() / BoardHeight; }
     Tetrominoes shapeAt(int x, int y) { return board[(y * BoardWidth) + x]; }
 
-
-    public void start()
-    {
+    public void start() {
         if (isPaused)
             return;
 
@@ -68,8 +64,7 @@ public class Board extends JPanel implements ActionListener {
         timer.start();
     }
 
-    private void pause()
-    {
+    private void pause() {
         if (!isStarted)
             return;
 
@@ -84,8 +79,7 @@ public class Board extends JPanel implements ActionListener {
         repaint();
     }
 
-    public void paint(Graphics g)
-    {
+    public void paint(Graphics g) {
         super.paint(g);
 
         Dimension size = getSize();
@@ -112,8 +106,7 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    private void dropDown()
-    {
+    private void dropDown() {
         int newY = curY;
         while (newY > 0) {
             if (!tryMove(curPiece, curX, newY - 1))
@@ -123,21 +116,18 @@ public class Board extends JPanel implements ActionListener {
         pieceDropped();
     }
 
-    private void oneLineDown()
-    {
+    private void oneLineDown() {
         if (!tryMove(curPiece, curX, curY - 1))
             pieceDropped();
     }
 
 
-    private void clearBoard()
-    {
+    private void clearBoard() {
         for (int i = 0; i < BoardHeight * BoardWidth; ++i)
             board[i] = Tetrominoes.NoShape;
     }
 
-    private void pieceDropped()
-    {
+    private void pieceDropped() {
         for (int i = 0; i < 4; ++i) {
             int x = curX + curPiece.x(i);
             int y = curY - curPiece.y(i);
@@ -150,8 +140,7 @@ public class Board extends JPanel implements ActionListener {
             newPiece();
     }
 
-    private void newPiece()
-    {
+    private void newPiece() {
         curPiece.setRandomShape();
         curX = BoardWidth / 2 + 1;
         curY = BoardHeight - 1 + curPiece.minY();
@@ -164,8 +153,7 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    private boolean tryMove(Shape newPiece, int newX, int newY)
-    {
+    private boolean tryMove(Shape newPiece, int newX, int newY) {
         for (int i = 0; i < 4; ++i) {
             int x = newX + newPiece.x(i);
             int y = newY - newPiece.y(i);
@@ -182,8 +170,7 @@ public class Board extends JPanel implements ActionListener {
         return true;
     }
 
-    private void removeFullLines()
-    {
+    private void removeFullLines() {
         int numFullLines = 0;
 
         for (int i = BoardHeight - 1; i >= 0; --i) {
@@ -214,8 +201,7 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    private void drawSquare(Graphics g, int x, int y, Tetrominoes shape)
-    {
+    private void drawSquare(Graphics g, int x, int y, Tetrominoes shape) {
         Color colors[] = { new Color(0, 0, 0), new Color(204, 102, 102),
                 new Color(102, 204, 102), new Color(102, 102, 204),
                 new Color(204, 204, 102), new Color(204, 102, 204),
